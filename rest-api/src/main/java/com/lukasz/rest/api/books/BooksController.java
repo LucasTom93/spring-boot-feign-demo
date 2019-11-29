@@ -16,7 +16,7 @@ class BooksController {
         this.bookQueryRepository = bookQueryRepository;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     Set<BookQueryDto> getAll() {
         return bookQueryRepository.findAll();
     }

@@ -1,9 +1,8 @@
 package com.lukasz.rest.api.books;
 
-import org.springframework.data.repository.Repository;
+import org.springframework.stereotype.Repository;
 
-@org.springframework.stereotype.Repository
-interface BookCommandRepository extends Repository<BookEntity, Long> {
+@Repository
+interface BookCommandRepository extends CommandRepository {
 
-    BookEntity save(BookEntity bookEntity);
 }

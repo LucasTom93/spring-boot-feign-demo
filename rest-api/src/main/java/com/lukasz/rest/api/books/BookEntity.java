@@ -25,4 +25,20 @@ class BookEntity {
     static BookEntity of(String title, String author) {
         return new BookEntity(title, author);
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    void setId(Long id) {
+        this.id = id;
+    }
 }

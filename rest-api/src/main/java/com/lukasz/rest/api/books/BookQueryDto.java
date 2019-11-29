@@ -13,6 +13,12 @@ class BookQueryDto {
         this.author = author;
     }
 
+    static BookQueryDto of(BookEntity bookEntity) {
+        String title = bookEntity.getTitle();
+        String author = bookEntity.getAuthor();
+        return new BookQueryDto(title, author);
+    }
+
     public String getTitle() {
         return title;
     }

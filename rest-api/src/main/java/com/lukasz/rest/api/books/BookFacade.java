@@ -1,17 +1,32 @@
 package com.lukasz.rest.api.books;
 
-import org.springframework.stereotype.Component;
+import java.util.Optional;
+import java.util.Set;
 
-@Component
 public class BookFacade {
-    private final BookCommandRepository bookCommandRepository;
+    private final CommandRepository commandRepository;
+    private final QueryRepository queryRepository;
 
-    public BookFacade(BookCommandRepository bookCommandRepository) {
-        this.bookCommandRepository = bookCommandRepository;
+    public BookFacade(CommandRepository commandRepository, QueryRepository queryRepository) {
+        this.commandRepository = commandRepository;
+        this.queryRepository = queryRepository;
     }
 
-    public void save(String title, String author) {
+    public Long save(String title, String author) {
         var bookEntity = BookEntity.of(title, author);
-        bookCommandRepository.save(bookEntity);
+        return commandRepository.save(bookEntity).getId();
+    }
+
+    public BookQueryDto getBook(Long id) {
+        Optional<BookQueryDto> bookQueryDtoOptional = queryRepository.findOneById(id);
+        return bookQueryDtoOptional.orElseThrow(NoBookFoundException::new);
+    }
+
+    public Set<BookQueryDto> getAll() {
+        return queryRepository.findAll();
+    }
+
+    public void deleteAll() {
+        commandRepository.deleteAll();
     }
 }

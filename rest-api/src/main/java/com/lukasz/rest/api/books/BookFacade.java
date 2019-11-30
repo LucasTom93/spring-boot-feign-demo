@@ -29,4 +29,8 @@ public class BookFacade {
     public void deleteAll() {
         commandRepository.deleteAll();
     }
+
+    public Set<BookQueryDto> searchByTitleContaining(String searchValue) {
+        return queryRepository.findByTitleLike(searchValue);
+    }
 }

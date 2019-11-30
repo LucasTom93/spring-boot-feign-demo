@@ -20,6 +20,26 @@ class InMemoryBookQueryRepository implements QueryRepository {
     }
 
     @Override
+    public Set<BookQueryDto> findByTitleLike(String titleLike) {
+        return MAP_DATABASE.values()
+                .stream()
+                .filter(bookEntity -> foo(bookEntity, titleLike))
+                .map(BookQueryDto::of)
+                .collect(Collectors.toSet());
+    }
+
+    private boolean foo(BookEntity bookEntity, String titleLike) {
+        boolean isSearchTitleEmpty = titleLike.equals("");
+        if (isSearchTitleEmpty) {
+            return true;
+        } else {
+            return bookEntity.getTitle()
+                    .toUpperCase()
+                    .contains(titleLike.toUpperCase());
+        }
+    }
+
+    @Override
     public Set<BookQueryDto> findAll() {
         return MAP_DATABASE.values()
                 .stream()

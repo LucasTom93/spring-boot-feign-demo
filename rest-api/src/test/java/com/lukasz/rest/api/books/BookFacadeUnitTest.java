@@ -76,9 +76,35 @@ class BookFacadeUnitTest {
         assertThat(bookFacade.getAll()).isEmpty();
     }
 
+    @Test
+    void shouldFindWhenSearchByTitleContainingValue() {
+        //given
+        var title = "Symfonia C++";
+        var author = "Jerzy Grębosz";
+        var symphonyBookId = addSimpleBook(title, author);
+
+        //when
+        var foundBookSet = bookFacade.searchByTitleContaining("C++");
+
+        //then
+        var foundBookOptional = foundBookSet.stream().findFirst();
+        assertThat(foundBookOptional).isNotEmpty();
+        assertThat(foundBookOptional.get()).extracting(
+                BookQueryDto::getTitle,
+                BookQueryDto::getAuthor
+        ).containsExactly(
+                title,
+                author
+        );
+    }
+
     private Long addSimpleBook() {
         var title = "Thinking in Java";
         var author = "Bruce Eckel";
+        return addSimpleBook(title, author);
+    }
+
+    private Long addSimpleBook(String title, String author) {
         return bookFacade.save(title, author);
     }
 }

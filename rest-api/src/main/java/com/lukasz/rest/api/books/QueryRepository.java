@@ -16,4 +16,9 @@ interface QueryRepository extends Repository<BookEntity, Long> {
 
     @Query("SELECT NEW com.lukasz.rest.api.books.BookQueryDto(be.title, be.author) FROM BookEntity be WHERE be.id = :id")
     Optional<BookQueryDto> findOneById(@Param("id") Long id);
+
+    @Query("SELECT NEW com.lukasz.rest.api.books.BookQueryDto(be.title, be.author) " +
+            "FROM BookEntity be " +
+            "WHERE UPPER(be.title) LIKE CONCAT('%', UPPER(:titleLike), '%')")
+    Set<BookQueryDto> findByTitleLike(@Param("titleLike") String titleLike);
 }

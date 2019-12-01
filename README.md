@@ -6,3 +6,4 @@
 3. The `Client module` has endpoint http://localhost:8099/library/books/all and uses the ***Feign*** framework to call the `Api module` endpoint to
  receive data
 4. The `Api module` has CQRS design style
+5. Na API of the `Client module` is available via Swagger: http://localhost:8099/swagger-ui.html
